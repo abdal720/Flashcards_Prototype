@@ -1,27 +1,46 @@
 package components;
 
-public class FlashcardBuilder {
+import components.Question.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class FlashcardBuilder
+{
     private FlashcardBuilder() { }
 
-    public static Flashcard buildTrueOrFalse(String subject, String question, boolean correctAns) {
-        Question<Boolean> trueOrFalseQuestion = new TrueOrFalse(question, correctAns);
-        Flashcard flashcard = new Flashcard(subject, trueOrFalseQuestion);
-        return null;
+/*
+    public static Flashcard buildTrueOrFalse(String subject, String question, boolean correctAns)
+    {
+        Answer<Boolean> trueFalseAnswer = new Answer<>(correctAns);
+        Question<Boolean> trueOrFalseQuestion = new TrueOrFalse(question, trueFalseAnswer);
+        return new Flashcard(subject, trueOrFalseQuestion);
     }
+*/
 
     public static Flashcard buildMultipleChoice(String subject, String question,
-                                                String correctAns, String ... choices)
+                                                String correctAnswer, List<String> choices)
     {
-       // Question.Answer<String>
-       // Question<String> multipleChoiceQuestion = new MultipleChoice(question, );
-        return null;
+        List<Answer<String>> ansChoices = new ArrayList<>();
+        Answer<String> correctAns = new Answer<>(correctAnswer);
+        choices.forEach(choice -> ansChoices.add(new Answer<>(choice)));
+        Question<String> multChoiceQuestion = new MultipleChoice(question, ansChoices, correctAns);
+        return new Flashcard(subject, multChoiceQuestion);
     }
 
-    public static Flashcard buildMultipleSelect() {
-        return null;
-    }
+/*    public static Flashcard buildMultipleSelect(String subject, String question,
+                                                List<String> correctAnswers, String ... selections)
+    {
+        Answer<List<String>> correctAns = new Answer<>(correctAnswers);
+        Answer<List<String>> ansSelections = new Answer<>(new ArrayList<>(Arrays.asList(selections)));
+        MultipleSelect multSelectQuestion = new MultipleSelect(question, correctAns, ansSelections);
+        return new Flashcard(subject, multSelectQuestion);
+    }*/
 
-    public static Flashcard buildFillInBlank() {
-        return null;
-    }
+ /*   public static Flashcard buildFillInBlank(String subject, String question, String correctAnswer)
+    {
+        List<Answer<String>> answers = new ArrayList<>();
+        answers.add(new Answer<>(correctAnswer));
+        Question<String> fillInBlankQuestion = new FillInBlank(question, answers);
+        return new Flashcard(subject, fillInBlankQuestion);
+    }*/
 }

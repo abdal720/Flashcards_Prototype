@@ -1,58 +1,60 @@
 package components;
 
-import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
-public abstract class Question <T extends Comparable<T>> {
+public abstract class Question<T extends Comparable<T>>
+{
     public enum Type {
-        MULTIPLE_CHOICE, MULTIPLE_SELECT,
-        TRUE_OR_FALSE, FILL_IN_BLANK
+        MULTIPLE_CHOICE, MULTIPLE_SELECT, TRUE_OR_FALSE, FILL_IN_BLANK
     }
-    protected String question;
-    protected Set<Answer<T>> answerChoices;
     protected Type questionType;
+    private List<Answer<T>> answerOptions;
+    protected String question;
 
-    public Question(Type questionType, String question, Answer<T> ... answerChoices) {
+    public Question(Type questionType, String question, List<Answer<T>> answerOptions) {
         this.question = question;
-        this.answerChoices = new HashSet<>();
         this.questionType = questionType;
-        initAnswerChoices(answerChoices);
+        this.answerOptions = new ArrayList<>();
+        this.answerOptions.addAll(answerOptions);
     }
 
-    public abstract <T extends Comparable<T> & List<Answer<T>>> Answer<T> getCorrectAnswer();
-    public abstract <T extends Comparable<T> & List<Answer<T>>> void setCorrectAnswer(Answer<T> correctAns);
+    public static class Answer<T extends Comparable<T>> {
+        private T answer;
+        public Answer(T answerOption) { this.answer = answerOption; }
+        public T getAnswer() { return this.answer; }
 
-    private void initAnswerChoices(Answer<T> ... answerSet) {
-        for (Answer<T> ans : answerSet) {
-            this.answerChoices.add(ans);
+        @Override
+        public boolean equals(Object o) {
+            if (o == this) return true;
+            if (!(o instanceof Answer)) return false;
+            return answer.compareTo(((Answer<T>) o).getAnswer()) == 0;
+        }
+        @Override
+        public int hashCode() {
+            return (404+answer.toString().hashCode()/8);
+        }
+        @Override
+        public String toString() {
+            return answer.toString();
         }
     }
 
-    public static class Answer<T> {
-        private T actualAnswer;
-
-        public Answer(T actualAnswer) {
-            this.actualAnswer = actualAnswer;
-        }
-        public T getActualAnswer() {
-            return actualAnswer;
-        }
+    protected List<Answer<T>> getAnswerOptions() {
+        return this.answerOptions;
     }
+
+    protected abstract <T extends Comparable<T>> void setCorrectAnswer(List<Answer<T>> answer);
+    protected abstract List<Answer<T>> getCorrectAnswer();
 
     public String getQuestion() {
         return this.question;
     }
-
-    public Type getType() {
-        return this.questionType;
-    }
-
-    public Set<Answer<T>> getAnswerChoices() {
-        return this.answerChoices;
-    }
-
     public Type getQuestionType() {
         return this.questionType;
+    }
+
+    @Override
+    public String toString() {
+        return question;
     }
 }

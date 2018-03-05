@@ -1,19 +1,29 @@
 package components;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class FillInBlank extends Question {
-    private Answer<String> correctAns;
+    private List<Answer<String>> correctAns;
 
-    public FillInBlank(String question, Answer<String> correctAns) {
-        super(Question.Type.FILL_IN_BLANK, question, new Answer<>(correctAns));
-        this.correctAns = new Answer(correctAns);
+    public FillInBlank(String question, List<Answer<String>> ansSelections, List<Answer<String>> correctAns) {
+        super(Question.Type.FILL_IN_BLANK, question, ansSelections);
+        this.correctAns = new ArrayList<>(correctAns.size());
+        setCorrectAnswer(correctAns);
+    }
+
+    protected void setCorrectAnswer(Answer ... ans) {
+
     }
 
     @Override
-    public Answer<String> getCorrectAnswer() {
+    protected void setCorrectAnswer(List answer) {
+
+    }
+
+    @Override
+    protected List<Answer<String>> getCorrectAnswer() {
         return this.correctAns;
-    }
-    @Override
-    public void setCorrectAnswer(Answer correctAns) {
-        this.correctAns = correctAns;
     }
 }

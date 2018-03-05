@@ -1,22 +1,25 @@
 package components;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TrueOrFalse extends Question {
-    private Answer<Boolean> correctAns;
+    private List<Answer<Boolean>> correctAns;
 
-    public TrueOrFalse(String question, boolean correctAns) {
-        super(Question.Type.TRUE_OR_FALSE, question, new Answer(correctAns));
-        this.correctAns = new Answer(correctAns);
+    public TrueOrFalse(String question, List<Answer<Boolean>> options, Answer<Boolean> correctAns) {
+        super(Question.Type.TRUE_OR_FALSE, question, options);
+        this.correctAns = new ArrayList<>(1);
+        this.correctAns.add(correctAns);
+       // setCorrectAnswer(correctAns);
     }
 
     @Override
-    public Answer<Boolean> getCorrectAnswer() {
+    public List<Answer<Boolean>> getCorrectAnswer() {
         return this.correctAns;
     }
 
     @Override
-    public void setCorrectAnswer(Answer correctAns) {
-        this.correctAns = correctAns;
+    public void setCorrectAnswer(List correctAns) {
+
     }
 }

@@ -1,20 +1,33 @@
 package components;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.ArrayList;
+
 public class MultipleChoice extends Question {
-    private Answer<String> correctAns;
+    private List<Answer<String>> correctAnswer;
 
-    public MultipleChoice(String question, Answer<String> correctAns, Answer<String> ... choices) {
-        super(Question.Type.MULTIPLE_CHOICE, question, choices);
-        this.correctAns = correctAns;
+    public MultipleChoice(String question, List<Answer<String>> ansChoices, Answer<String> correctAns) {
+        super(Question.Type.MULTIPLE_CHOICE, question, ansChoices);
+        this.correctAnswer = new ArrayList<>(1);
+        setCorrectAnswer(correctAns);
+    }
+
+    private void setCorrectAnswer(Answer<String> ans) {
+        List<Answer> answer = new ArrayList<>(1);
+        answer.add(ans);
+        setCorrectAnswer(answer);
     }
 
     @Override
-    public Answer<String> getCorrectAnswer() {
-        return this.correctAns;
+    protected void setCorrectAnswer(List answer) {
+        this.correctAnswer.addAll(answer);
     }
 
     @Override
-    public void setCorrectAnswer(Answer correctAns) {
-
+    protected List<Answer<String>> getCorrectAnswer() {
+        return correctAnswer;
     }
+
 }

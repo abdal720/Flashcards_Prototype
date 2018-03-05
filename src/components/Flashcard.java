@@ -1,48 +1,85 @@
 package components;
 
-import java.util.Set;
-import java.util.HashSet;
+import components.Question.*;
+import java.util.HashMap;
+import java.util.List;
 
-// TODO: Build a builder for this
-
-public class Flashcard<T extends Comparable<T>>
+public class Flashcard implements Answerable
 {
     private String subject;
     private Question question;
-    private Set<Question.Answer<T>> responseSet;
-    private boolean isCorrectResponse = false;
-
-    private Flashcard() {
-        this.responseSet = new HashSet<>();
-    }
+    private boolean isAnswerCorrect = false;
 
     public Flashcard(String subject, Question question) {
-        this();
         this.subject = subject;
         this.question = question;
-        this.responseSet = new HashSet<>();
     }
 
-    public boolean isResponseCorrect() {
-        return isCorrectResponse;
+    public boolean isAnswerCorrect() {
+        return isAnswerCorrect;
     }
 
-    public void setResponse(Question.Answer<T> response) {
-        responseSet.add(response);
+    public List getAnswerOptions() {
+        return question.getAnswerOptions();
     }
 
-    public void checkResponse() {
-        isCorrectResponse = responseSet.stream()
-                .allMatch(r -> r.equals(question.getCorrectAnswer()));
+    public void setResponse(String response) {
+        checkResponse(response);
+    }
+
+    protected void checkResponse(String response) {
+        switch (question.getQuestionType()){
+            case MULTIPLE_CHOICE :
+                checkMultChoiceQuestion(Character.toUpperCase(response.charAt(0)));
+                break;
+            case MULTIPLE_SELECT : break;
+            case FILL_IN_BLANK : break;
+            case TRUE_OR_FALSE : break;
+        }
+    }
+
+    private HashMap<Character, Answer<String>> multChoiceOptions;
+    private void checkMultChoiceQuestion(char choice)
+    {
+        char opt = 'A';
+        final int optSize = question.getAnswerOptions().size();
+        if ((choice <= opt+(optSize-1))) {
+            multChoiceOptions = new HashMap<>(optSize);
+            for (int i = 0; i < optSize; i++, opt++) {
+                multChoiceOptions.put(opt, ((Answer) question.getAnswerOptions().get(i)));
+            }
+            if (multChoiceOptions.containsKey(Character.toUpperCase(choice))) {
+                Answer chosenAns = multChoiceOptions.get(choice);
+                isAnswerCorrect = question.getCorrectAnswer().stream()
+                        .allMatch(ans -> ans.equals(chosenAns));
+            }
+        }
+    }
+
+    // TODO
+    private boolean checkMultipleSelectQuestion(String response) {
+        return false;
+    }
+
+    // TODO
+    private boolean checkFillInBlankQuestion(String answer) {
+        return false;
+    }
+
+    // TODO
+    private boolean checkTrueOrFalseQuestion(boolean trueOrFalse) {
+        return false;
     }
 
     public Question getQuestion() { return question; }
 
     @Override
     public String toString() {
-        return "subject="+subject+", " +
-                "\nquestion="+question+""+
-                "--- " +
-                "\n" +question.getAnswerChoices();
+        StringBuilder cardStringBuilder = new StringBuilder();
+        String text = "subject: "+subject+
+                "\nquestion: "+question+"\n---";
+        cardStringBuilder.append(text);
+        cardStringBuilder.append(question.getAnswerOptions().toString());
+        return cardStringBuilder.toString();
     }
 }
