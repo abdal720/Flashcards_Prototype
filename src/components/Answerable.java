@@ -1,5 +1,7 @@
 package components;
+import java.util.List;
 
 public interface Answerable {
-    boolean isAnswerCorrect();
+    <T extends Comparable<T>> List<T> getAnswerOptions();
+    boolean confirmAnswer(String answer);
 }

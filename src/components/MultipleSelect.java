@@ -19,4 +19,9 @@ public class MultipleSelect extends Question {
     public void setCorrectAnswer(List correctAns) {
 
     }
+
+    @Override
+    public boolean confirmAnswer(String answer) {
+        return false;
+    }
 }

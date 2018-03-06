@@ -26,4 +26,9 @@ public class FillInBlank extends Question {
     protected List<Answer<String>> getCorrectAnswer() {
         return this.correctAns;
     }
+
+    @Override
+    public boolean confirmAnswer(String answer) {
+        return false;
+    }
 }

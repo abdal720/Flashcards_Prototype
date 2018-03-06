@@ -1,10 +1,8 @@
 package components;
 
-import components.Question.*;
-import java.util.HashMap;
 import java.util.List;
 
-public class Flashcard implements Answerable
+public class Flashcard
 {
     private String subject;
     private Question question;
@@ -32,27 +30,18 @@ public class Flashcard implements Answerable
             case MULTIPLE_CHOICE :
                 checkMultChoiceQuestion(Character.toUpperCase(response.charAt(0)));
                 break;
+            case TRUE_OR_FALSE :
+                verifyTrueFalseResponse(Character.toUpperCase(response.charAt(0)));
+                break;
             case MULTIPLE_SELECT : break;
             case FILL_IN_BLANK : break;
-            case TRUE_OR_FALSE : break;
         }
     }
 
-    private HashMap<Character, Answer<String>> multChoiceOptions;
-    private void checkMultChoiceQuestion(char choice)
-    {
-        char opt = 'A';
+    private void checkMultChoiceQuestion(char choice) {
         final int optSize = question.getAnswerOptions().size();
-        if ((choice <= opt+(optSize-1))) {
-            multChoiceOptions = new HashMap<>(optSize);
-            for (int i = 0; i < optSize; i++, opt++) {
-                multChoiceOptions.put(opt, ((Answer) question.getAnswerOptions().get(i)));
-            }
-            if (multChoiceOptions.containsKey(Character.toUpperCase(choice))) {
-                Answer chosenAns = multChoiceOptions.get(choice);
-                isAnswerCorrect = question.getCorrectAnswer().stream()
-                        .allMatch(ans -> ans.equals(chosenAns));
-            }
+        if ((choice <= 'A'+(optSize-1))) {
+          isAnswerCorrect = question.confirmAnswer(Character.toString(choice));
         }
     }
 
@@ -67,8 +56,8 @@ public class Flashcard implements Answerable
     }
 
     // TODO
-    private boolean checkTrueOrFalseQuestion(boolean trueOrFalse) {
-        return false;
+    private void verifyTrueFalseResponse(char answer) {
+        isAnswerCorrect = question.confirmAnswer(Character.toString(answer));
     }
 
     public Question getQuestion() { return question; }

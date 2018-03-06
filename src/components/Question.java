@@ -2,13 +2,13 @@ package components;
 
 import java.util.*;
 
-public abstract class Question<T extends Comparable<T>>
+public abstract class Question<T extends Comparable<T>> implements Answerable
 {
     public enum Type {
         MULTIPLE_CHOICE, MULTIPLE_SELECT, TRUE_OR_FALSE, FILL_IN_BLANK
     }
     protected Type questionType;
-    private List<Answer<T>> answerOptions;
+    protected List<Answer<T>> answerOptions;
     protected String question;
 
     public Question(Type questionType, String question, List<Answer<T>> answerOptions) {
@@ -39,7 +39,7 @@ public abstract class Question<T extends Comparable<T>>
         }
     }
 
-    protected List<Answer<T>> getAnswerOptions() {
+    public List<Answer<T>> getAnswerOptions() {
         return this.answerOptions;
     }
 
