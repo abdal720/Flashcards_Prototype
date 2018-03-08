@@ -27,9 +27,10 @@ public class TrueOrFalse extends Question {
     @Override
     public boolean confirmAnswer(String key) {
         Answer<Boolean> answer = correctAns.get(0);
-        switch (key.charAt(0)) {
-            case 'T' : return answer.equals(new Answer<>(true));
-            case 'F' : return answer.equals(new Answer<>(false));
+        key = Character.toString(key.charAt(0));
+        switch (key) {
+            case "T" : return answer.equals(new Answer<>(true));
+            case "F" : return answer.equals(new Answer<>(false));
             default  : return false;
         }
     }

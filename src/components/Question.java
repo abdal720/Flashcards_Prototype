@@ -7,6 +7,7 @@ public abstract class Question<T extends Comparable<T>> implements Answerable
     public enum Type {
         MULTIPLE_CHOICE, MULTIPLE_SELECT, TRUE_OR_FALSE, FILL_IN_BLANK
     }
+
     protected Type questionType;
     protected List<Answer<T>> answerOptions;
     protected String question;

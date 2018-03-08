@@ -9,58 +9,87 @@ import components.Question.*;
 public class Main {
     public static void main(String[] args) {
         testMultipleChoiceCard(1);
-        testTrueOrFalse(2);
+        testTrueOrFalseCard(2);
+        testMultipleSelectCard(3);
     }
 
     public static void testMultipleChoiceCard(int questionNum) {
-        List<String> choiceOptions = new ArrayList<>();
+        List<String> choiceList = new ArrayList<>();
         String subject = "computer science",
                question = "What are four aspects of algorithm complexity?",
                a = "input size, runtime, output size, rate of growth",
                b = "rate of growth, input size, CPU speed, runtime",
                c = "runtime, RAM space, output size, input size",
                d = "input size, CPU speed, RAM space, output size";
-        choiceOptions.add(a);
-        choiceOptions.add(b);
-        choiceOptions.add(c);
-        choiceOptions.add(d);
-        String correctAnswer = choiceOptions.get(1);
+        choiceList.add(a);
+        choiceList.add(b);
+        choiceList.add(c);
+        choiceList.add(d);
+        String correctAnswer = choiceList.get(1);
         Flashcard multChoiceCard = FlashcardBuilder.buildMultipleChoice(
-                subject, question, correctAnswer, choiceOptions
+                subject, question, choiceList, correctAnswer
         );
         while (!multChoiceCard.isAnswerCorrect()) {
-            System.out.println("Question "+questionNum+".");
             System.out.println("Subject: "+subject+".");
+            System.out.println("Question "+questionNum+".");
             System.out.println(multChoiceCard.getQuestion().toString() + "\n");
             printOptions(multChoiceCard.getQuestion());
             String input = new Scanner(System.in).nextLine().toUpperCase();
             multChoiceCard.setResponse(input);
-            System.out.println(multChoiceCard.isAnswerCorrect() ? "Correct!\n" : "Incorrect\n");
+            printWhetherCorrect(multChoiceCard);
         }
     }
 
-    public static void testTrueOrFalse(int questionNum) {
+    public static void testTrueOrFalseCard(int questionNum) {
         String subject = "Astronomy";
         String question = "Low thermal pressure can prevent interstellar clouds from " +
                           "gravitationally contracting.";
         // TODO: hint- cool enough to be a star
         Flashcard trueFalseCard = FlashcardBuilder.buildTrueOrFalse(subject, question, false);
         while (!trueFalseCard.isAnswerCorrect()) {
+            System.out.println("Subject "+subject);
             System.out.println("Question "+questionNum+".");
-            System.out.println("Subject "+subject+".");
             System.out.println(trueFalseCard.getQuestion().toString());
             printOptions(trueFalseCard.getQuestion());
             String input = new Scanner(System.in).nextLine();
             trueFalseCard.setResponse(input);
+            printWhetherCorrect(trueFalseCard);
+        }
+    }
+
+    public static void testMultipleSelectCard(int questionNum) {
+        List<String> selectionList = new ArrayList<>(5),
+                     correctAnswers = new ArrayList(3);
+        String subject  = "Psychology",
+               question = "Choose the three mental stages involved with learning and memory:",
+               a = "encoding", b = "filtering", c = "retrieval", d = "acquirement", e = "storage";
+        selectionList.add(a);
+        selectionList.add(b);
+        selectionList.add(c);
+        selectionList.add(d);
+        selectionList.add(e);
+        correctAnswers.add(a);
+        correctAnswers.add(c);
+        correctAnswers.add(e);
+        Flashcard multSelectCard = FlashcardBuilder.buildMultipleSelect(
+                subject, question, selectionList, correctAnswers);
+        while (!multSelectCard.isAnswerCorrect()) {
+            System.out.println("Subject: "+subject);
+            System.out.println("Question: "+questionNum);
+            System.out.println(multSelectCard.getQuestion().toString());
+            printOptions(multSelectCard.getQuestion());
+            String input = new Scanner(System.in).nextLine().replaceAll("\\s", "");
+            multSelectCard.setResponse(input);
+            printWhetherCorrect(multSelectCard);
         }
     }
 
     public static void printOptions(Question question) {
         switch (question.getQuestionType()) {
             case MULTIPLE_CHOICE : printMultChoiceOpts(question.getAnswerOptions()); break;
-            case MULTIPLE_SELECT : printMultSelectOpts(question.getAnswerOptions()); break;
-            case TRUE_OR_FALSE   : printTrueFalseOpts(question.getAnswerOptions()); break;
-            default : break;
+            case MULTIPLE_SELECT : printMultChoiceOpts(question.getAnswerOptions()); break;
+            case TRUE_OR_FALSE   : printTrueFalseOpts(question.getAnswerOptions());  break;
+            default :                                                                break;
         }
     }
 
@@ -69,18 +98,14 @@ public class Main {
     }
 
     public static void printMultChoiceOpts(List<Answer> options) {
-        char key = 'A';
+        char key = 'a';
         for (Object ansOpt : options) {
             System.out.println(key+". "+ansOpt.toString());
             key++;
         }
     }
 
-    public static void printMultSelectOpts(List<Answer> options) {
-        int opt = 1;
-        for (Object ansOpt : options) {
-            System.out.println(opt+". "+ansOpt);
-            opt++;
-        }
+    public static void printWhetherCorrect(Flashcard flashcard) {
+        System.out.println(flashcard.isAnswerCorrect() ? "Correct!\n" : "Incorrect.\n");
     }
 }

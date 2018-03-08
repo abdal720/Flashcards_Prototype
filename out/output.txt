@@ -1,0 +1,57 @@
+Subject: computer science.
+Question 1.
+What are four aspects of algorithm complexity?
+
+a. input size, runtime, output size, rate of growth
+b. rate of growth, input size, CPU speed, runtime
+c. runtime, RAM space, output size, input size
+d. input size, CPU speed, RAM space, output size
+c
+Incorrect.
+
+Subject: computer science.
+Question 1.
+What are four aspects of algorithm complexity?
+
+a. input size, runtime, output size, rate of growth
+b. rate of growth, input size, CPU speed, runtime
+c. runtime, RAM space, output size, input size
+d. input size, CPU speed, RAM space, output size
+b
+Correct!
+
+Subject Astronomy
+Question 2.
+Low thermal pressure can prevent interstellar clouds from gravitationally contracting.
+false(t) or (f)true
+t
+Incorrect.
+
+Subject Astronomy
+Question 2.
+Low thermal pressure can prevent interstellar clouds from gravitationally contracting.
+false(t) or (f)true
+f
+Correct!
+
+Subject: Psychology
+Question: 3
+Choose the three mental stages involved with learning and memory:
+a. encoding
+b. filtering
+c. retrieval
+d. acquirement
+e. storage
+abd
+Incorrect.
+
+Subject: Psychology
+Question: 3
+Choose the three mental stages involved with learning and memory:
+a. encoding
+b. filtering
+c. retrieval
+d. acquirement
+e. storage
+aec
+Correct!

@@ -26,28 +26,31 @@ public class Flashcard
     }
 
     protected void checkResponse(String response) {
-        switch (question.getQuestionType()){
-            case MULTIPLE_CHOICE :
-                checkMultChoiceQuestion(Character.toUpperCase(response.charAt(0)));
-                break;
-            case TRUE_OR_FALSE :
-                verifyTrueFalseResponse(Character.toUpperCase(response.charAt(0)));
-                break;
-            case MULTIPLE_SELECT : break;
+        char charVal = Character.toUpperCase(response.charAt(0));
+        switch (question.getQuestionType())
+        {
+            case MULTIPLE_CHOICE : verifyMultChoiceResponse(charVal);  break;
+            case TRUE_OR_FALSE   : verifyTrueFalseResponse(charVal);   break;
+            case MULTIPLE_SELECT : verifyMultSelectResponse(response); break;
             case FILL_IN_BLANK : break;
+            default : return;
         }
     }
 
-    private void checkMultChoiceQuestion(char choice) {
+    private void verifyMultChoiceResponse(char choice) {
         final int optSize = question.getAnswerOptions().size();
         if ((choice <= 'A'+(optSize-1))) {
           isAnswerCorrect = question.confirmAnswer(Character.toString(choice));
         }
+
     }
 
     // TODO
-    private boolean checkMultipleSelectQuestion(String response) {
-        return false;
+    private void verifyMultSelectResponse(String response) {
+        final int numAns = question.getCorrectAnswer().size();
+        if (response.length() < numAns) return;
+        response = response.substring(0, numAns);
+        isAnswerCorrect = question.confirmAnswer(response);
     }
 
     // TODO
