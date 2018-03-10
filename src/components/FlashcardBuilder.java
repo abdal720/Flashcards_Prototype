@@ -9,28 +9,28 @@ public class FlashcardBuilder
 {
     private FlashcardBuilder() { }
 
-    public static Flashcard buildTrueOrFalse(String subject, String statement, boolean correctAns)
+    public static Flashcard buildTrueOrFalseCard(String subject, String statement, boolean correctAns)
     {
-        Answer[] options = { new Answer(new Boolean(true)),
-                             new Answer(new Boolean(false))
+        Answer[] options = { new Answer(true),
+                             new Answer(false)
         };
         Question<Boolean> trueOrFalseQuestion = new TrueOrFalse(
                 statement, Arrays.asList(options), new Answer<>(correctAns));
         return new Flashcard(subject, trueOrFalseQuestion);
     }
 
-    public static Flashcard buildMultipleChoice(String subject, String question,
-                                                List<String> choices, String correctAnswer)
+    public static Flashcard buildMultipleChoiceCard(String subject, String question,
+                                                    List<String> choices, String correctAnswer)
     {
         List<Answer<String>> ansChoices = new ArrayList<>();
         Answer<String> correctAns = new Answer<>(correctAnswer);
         choices.forEach(choice -> ansChoices.add(new Answer<>(choice)));
-        Question<String> multChoiceQuestion = new MultipleChoice(question, ansChoices, correctAns);
-        return new Flashcard(subject, multChoiceQuestion);
+        Question<String> multiChoiceQuestion = new MultipleChoice(question, ansChoices, correctAns);
+        return new Flashcard(subject, multiChoiceQuestion);
     }
 
-    public static Flashcard buildMultipleSelect(String subject, String question,
-                                                List<String> selections, List<String> correctAnswers)
+    public static Flashcard buildMultipleSelectCard(String subject, String question,
+                                                    List<String> selections, List<String> correctAnswers)
     {
         List<Answer<String>> ansSelections = new ArrayList<>(selections.size()),
                              correctAns = new ArrayList<>(correctAnswers.size());
@@ -41,16 +41,15 @@ public class FlashcardBuilder
                 answer -> correctAns.add(ansSelections.stream().filter(
                         ans -> ans.getAnswer().equals(answer)).findFirst().get())
         );
-        Question<String> multSelectQuestion = new MultipleSelect(question, ansSelections, correctAns);
+        Question<String> multSelectQuestion = new MultipleSelect(
+                question, ansSelections, correctAns);
         return new Flashcard(subject, multSelectQuestion);
     }
 
-    //TODO:
- /*   public static Flashcard buildFillInBlank(String subject, String question, String correctAnswer)
-    {
-        List<Answer<String>> answers = new ArrayList<>();
-        answers.add(new Answer<>(correctAnswer));
+    public static Flashcard buildFillInBlankCard(String subject, String question, List<String> correctAnswers) {
+        List<Answer<String>> answers = new ArrayList<>(correctAnswers.size());
+        correctAnswers.forEach(ans -> answers.add(new Answer<>(ans)));
         Question<String> fillInBlankQuestion = new FillInBlank(question, answers);
         return new Flashcard(subject, fillInBlankQuestion);
-    }*/
+    }
 }

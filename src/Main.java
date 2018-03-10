@@ -11,6 +11,7 @@ public class Main {
         testMultipleChoiceCard(1);
         testTrueOrFalseCard(2);
         testMultipleSelectCard(3);
+        testFillInBlankCard(4);
     }
 
     public static void testMultipleChoiceCard(int questionNum) {
@@ -26,10 +27,11 @@ public class Main {
         choiceList.add(c);
         choiceList.add(d);
         String correctAnswer = choiceList.get(1);
-        Flashcard multChoiceCard = FlashcardBuilder.buildMultipleChoice(
+        Flashcard multChoiceCard = FlashcardBuilder.buildMultipleChoiceCard(
                 subject, question, choiceList, correctAnswer
         );
-        while (!multChoiceCard.isAnswerCorrect()) {
+        while (!multChoiceCard.isAnswerCorrect())
+        {
             System.out.println("Subject: "+subject+".");
             System.out.println("Question "+questionNum+".");
             System.out.println(multChoiceCard.getQuestion().toString() + "\n");
@@ -45,8 +47,9 @@ public class Main {
         String question = "Low thermal pressure can prevent interstellar clouds from " +
                           "gravitationally contracting.";
         // TODO: hint- cool enough to be a star
-        Flashcard trueFalseCard = FlashcardBuilder.buildTrueOrFalse(subject, question, false);
-        while (!trueFalseCard.isAnswerCorrect()) {
+        Flashcard trueFalseCard = FlashcardBuilder.buildTrueOrFalseCard(subject, question, false);
+        while (!trueFalseCard.isAnswerCorrect())
+        {
             System.out.println("Subject "+subject);
             System.out.println("Question "+questionNum+".");
             System.out.println(trueFalseCard.getQuestion().toString());
@@ -71,16 +74,36 @@ public class Main {
         correctAnswers.add(a);
         correctAnswers.add(c);
         correctAnswers.add(e);
-        Flashcard multSelectCard = FlashcardBuilder.buildMultipleSelect(
+        Flashcard multiSelectCard = FlashcardBuilder.buildMultipleSelectCard(
                 subject, question, selectionList, correctAnswers);
-        while (!multSelectCard.isAnswerCorrect()) {
+        while (!multiSelectCard.isAnswerCorrect())
+        {
             System.out.println("Subject: "+subject);
             System.out.println("Question: "+questionNum);
-            System.out.println(multSelectCard.getQuestion().toString());
-            printOptions(multSelectCard.getQuestion());
+            System.out.println(multiSelectCard.getQuestion().toString());
+            printOptions(multiSelectCard.getQuestion());
             String input = new Scanner(System.in).nextLine().replaceAll("\\s", "");
-            multSelectCard.setResponse(input);
-            printWhetherCorrect(multSelectCard);
+            multiSelectCard.setResponse(input);
+            printWhetherCorrect(multiSelectCard);
+        }
+    }
+
+    public static void testFillInBlankCard(int questionNum) {
+        List<String> correctAns = new ArrayList<>();
+        String subject = "Calculus",
+               question = "The _______ ____ is used to differentiate two or more compositional functions.",
+               answer = "chain rule";
+        correctAns.add(answer);
+        Flashcard fillInBlankCard = FlashcardBuilder.buildFillInBlankCard(subject, question, correctAns);
+
+        while (!fillInBlankCard.isAnswerCorrect())
+        {
+            System.out.println("Subject: "+subject);
+            System.out.println("Question: "+questionNum);
+            System.out.println(fillInBlankCard.getQuestion().toString());
+            String input = new Scanner(System.in).nextLine();
+            fillInBlankCard.setResponse(input);
+            printWhetherCorrect(fillInBlankCard);
         }
     }
 

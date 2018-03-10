@@ -12,9 +12,13 @@ public abstract class Question<T extends Comparable<T>> implements Answerable
     protected List<Answer<T>> answerOptions;
     protected String question;
 
-    public Question(Type questionType, String question, List<Answer<T>> answerOptions) {
-        this.question = question;
+    public Question(Type questionType, String question) {
         this.questionType = questionType;
+        this.question = question;
+    }
+
+    public Question(Type questionType, String question, List<Answer<T>> answerOptions) {
+        this(questionType, question);
         this.answerOptions = new ArrayList<>();
         this.answerOptions.addAll(answerOptions);
     }
