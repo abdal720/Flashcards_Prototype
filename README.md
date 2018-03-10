@@ -5,7 +5,7 @@ A small API that creates custom flashcards for dynamically revising notes.
 ## What are flashcards? 
 Keep your course subjects organized, and ready for interactive studying!
 This API can be used to generate customized flashcards based on user prescribed questions and answers. For now it's just a subcomponent of a
-larger program who's aim is to help students study even more effectively. Using flashcards can to be a great study habit to apply. 
+larger program who's aim is to help students study even more effectively. Using flashcards can be a great study habit to apply. 
 
 ------
 ## Class Descriptions
