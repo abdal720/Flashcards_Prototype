@@ -11,15 +11,15 @@ larger program who's aim is to help students study even more effectively. The us
 ## Class Descriptions
 
 ### Flashcards
-Flashcards contain a course subject, the question and a boolean for whether or not its question has been answered correctly.
+The Flashcard class contains the question, the subject/topic of that question, and a boolean for whether or not its question has been answered correctly.
 
 ### Question
-This abstract class contains the actual question, can sometimes be a statement, based on question type. There are 4 Question Types: 
+This abstract class contains the actual question (a String), can sometimes be a statement based on the question's type. There are 4 question types: 
 **Multiple Choice** , **Multiple Select** , **True or False** & **Fill in the Blank**. Each type extending Question.
 Question objects also contains a varied range of corresponding Answer objects, and/or Answer options to choose from.
 
 ### Answer
-The self-explanatory answer to a question. Can be compared with other Answer objects created from user input to determine validity.
+Objects of this class are created to be held by a corresponding Question instance. Can be compared with other Answer objects created from user input to determine an answer's validity.
 
 ### FlashcardBuilder
-This class contains static methods for creating a Flashcard object of any Question type. Manual construction of Flashcard objects with different question types, can be laborious. FlashcardBuilder makes it a breeze. Just specify the type of question, the literal question, its answer(s), and answer options if any.
+This class contains static methods for creating a Flashcard object of any Question type. Manual construction of Flashcard objects with different question types, can be laborious. FlashcardBuilder makes it a breeze. Just specify the question's Type, the literal question, answer options if any, and the correct answer(s).
