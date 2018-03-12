@@ -34,7 +34,7 @@ public class FillInBlank extends Question {
             return false;
 
         for (int i = 0 ; i < correctAns.size() ; i++) {
-            Answer<String> ans = new Answer<>(answers[i]);
+            Answer<String> ans = new Answer<>(answers[i].toLowerCase());
             if (!correctAns.get(i).equals(ans)) return false;
         }
         return true;

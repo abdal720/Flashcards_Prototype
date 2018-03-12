@@ -48,7 +48,7 @@ public class FlashcardBuilder
 
     public static Flashcard buildFillInBlankCard(String subject, String question, List<String> correctAnswers) {
         List<Answer<String>> answers = new ArrayList<>(correctAnswers.size());
-        correctAnswers.forEach(ans -> answers.add(new Answer<>(ans)));
+        correctAnswers.forEach(ans -> answers.add(new Answer<>(ans.toLowerCase())));
         Question<String> fillInBlankQuestion = new FillInBlank(question, answers);
         return new Flashcard(subject, fillInBlankQuestion);
     }
