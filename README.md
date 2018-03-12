@@ -16,7 +16,7 @@ The Flashcard class contains the question, the subject/topic of that question, a
 ### Question
 This abstract class contains the actual question (a String), can sometimes be a statement based on the question's type. There are 4 question types: 
 **Multiple Choice** , **Multiple Select** , **True or False** & **Fill in the Blank**. Each type extending Question.
-Question objects also contains a varied range of corresponding Answer objects, and/or Answer options to choose from.
+Question objects also contain a varied range of corresponding Answer objects, and/or Answer options to choose from.
 
 ### Answer
 Objects of this class are created to be held by a corresponding Question instance. Can be compared with other Answer objects created from user input to determine an answer's validity.
