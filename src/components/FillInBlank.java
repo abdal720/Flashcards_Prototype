@@ -45,6 +45,11 @@ public class FillInBlank extends Question {
         return this.answerOptions;
     }
 
+    @Override
+    public String getQuestion() {
+       return this.statement;
+    }
+
     public boolean confirmAnswer(String ... answers) {
         if (answers.length > correctAns.size() || answers.length < correctAns.size())
             return false;
