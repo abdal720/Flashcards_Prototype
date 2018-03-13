@@ -1,16 +1,28 @@
 package components;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class FillInBlank extends Question {
     private List<Answer<String>> correctAns;
+    private List<String> answerOptions;
+    private String statement;
 
-    public FillInBlank(String question, List<Answer<String>> correctAns) {
-        super(Question.Type.FILL_IN_BLANK, question);
+   public FillInBlank(String statement, List<Answer<String>> correctAns) {
+        super(Question.Type.FILL_IN_BLANK, statement);
+        this.statement = statement;
         this.correctAns = new ArrayList<>(correctAns.size());
+        this.answerOptions = new ArrayList<>(correctAns.size());
         setCorrectAnswer(correctAns);
+        hideCorrectAnswer();
+    }
+
+    private void hideCorrectAnswer() {
+       this.correctAns.forEach(answer -> {
+            String hiddenAns = answer.getAnswer();
+            question = question.replaceFirst(
+                    hiddenAns, hiddenAns.replaceAll("\\w", "_"));
+        });
     }
 
     @Override
@@ -27,6 +39,10 @@ public class FillInBlank extends Question {
     public boolean confirmAnswer(String answer) {
         confirmAnswer(answer);
         return false;
+    }
+
+    public List<String> getAnswerOptions() {
+        return this.answerOptions;
     }
 
     public boolean confirmAnswer(String ... answers) {

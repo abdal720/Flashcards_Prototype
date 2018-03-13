@@ -46,10 +46,20 @@ public class FlashcardBuilder
         return new Flashcard(subject, multSelectQuestion);
     }
 
-    public static Flashcard buildFillInBlankCard(String subject, String question, List<String> correctAnswers) {
-        List<Answer<String>> answers = new ArrayList<>(correctAnswers.size());
-        correctAnswers.forEach(ans -> answers.add(new Answer<>(ans.toLowerCase())));
+    /** Send the statement string, and the hidden answers, which are words that must be included in the string.*/
+    public static Flashcard buildFillInBlankCard(String subject, String question, List<String> hiddenAnswers) {
+        if (!answersArePresent(question, hiddenAnswers)) return null;
+
+        List<Answer<String>> answers = new ArrayList<>(hiddenAnswers.size());
+        hiddenAnswers.forEach(ans -> answers.add(new Answer<>(ans.toLowerCase())));
         Question<String> fillInBlankQuestion = new FillInBlank(question, answers);
         return new Flashcard(subject, fillInBlankQuestion);
+    }
+
+    private static boolean answersArePresent(String question, List<String> hiddenAnswers) {
+        for (String ans : hiddenAnswers) {
+            if (!question.contains(ans)) return false;
+        }
+        return true;
     }
 }

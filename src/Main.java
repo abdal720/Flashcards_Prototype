@@ -44,8 +44,7 @@ public class Main {
 
     public static void testTrueOrFalseCard(int questionNum) {
         String subject = "Astronomy";
-        String question = "Low thermal pressure can prevent interstellar clouds from " +
-                          "gravitationally contracting.";
+        String question = "Low thermal pressure prevents the gravitational collapse of interstellar clouds.";
         // TODO: hint- cool enough to be a star
         Flashcard trueFalseCard = FlashcardBuilder.buildTrueOrFalseCard(subject, question, false);
         while (!trueFalseCard.isAnswerCorrect())
@@ -91,10 +90,10 @@ public class Main {
     public static void testFillInBlankCard(int questionNum) {
         List<String> correctAns = new ArrayList<>();
         String subject = "Calculus",
-               question = "The _______ ____ is used to differentiate two or more compositional functions.",
-               answer = "chain rule";
-        correctAns.add(answer);
-        Flashcard fillInBlankCard = FlashcardBuilder.buildFillInBlankCard(subject, question, correctAns);
+               statement = "The chain rule can be used to differentiate compositional functions.",
+               hiddenAns = "chain rule";
+        correctAns.add(hiddenAns);
+        Flashcard fillInBlankCard = FlashcardBuilder.buildFillInBlankCard(subject, statement, correctAns);
 
         while (!fillInBlankCard.isAnswerCorrect())
         {
@@ -117,7 +116,7 @@ public class Main {
     }
 
     public static void printTrueFalseOpts(List<Answer> options) {
-        System.out.println(options.get(1).toString()+"(t) or (f)"+options.get(0));
+        System.out.println("t. "+options.get(0).toString()+"\nf. "+options.get(1));
     }
 
     public static void printMultChoiceOpts(List<Answer> options) {
